@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f2f4f8;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --primary: #7c3aed;
+  --primary-hover: #6d28d9;
+  --ring: #8b5cf6;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --accent: #06b6d4;
+  --glow: rgba(124, 58, 237, 0.15);
+}
+
+.dark {
+  --background: #05070d;
+  --foreground: #f1f5f9;
+  --muted: #94a3b8;
+  --primary: #a78bfa;
+  --primary-hover: #c4b5fd;
+  --ring: #a78bfa;
+  --surface: #12121a;
+  --border: #2a2a3a;
+  --accent: #22d3ee;
+  --glow: rgba(167, 139, 250, 0.2);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --animate-shimmer: shimmer 2.5s ease-in-out infinite;
+  --animate-float: float 18s ease-in-out infinite;
+  --animate-float-delayed: float 22s ease-in-out infinite 2s;
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(12px, -18px) scale(1.03);
+  }
+  66% {
+    transform: translate(-10px, 10px) scale(0.98);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.logo-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Subtle grid (hero — matches global backdrop tone) */
+.hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.028) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
+
+.dark .hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(248, 250, 252, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248, 250, 252, 0.03) 1px, transparent 1px);
+}
+
+.mesh-bg {
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(99, 102, 241, 0.06), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(59, 130, 246, 0.04), transparent 45%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(79, 70, 229, 0.05), transparent 50%);
+}
+
+.dark .mesh-bg {
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -30%, rgba(99, 102, 241, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(59, 130, 246, 0.06), transparent 45%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(129, 140, 248, 0.06), transparent 50%);
+}
+
+/* Fixed backdrop: dot grid + SVG noise (see AgencyBackground) */
+.agency-bg-dots {
+  opacity: 0.42;
+  background-image: radial-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dark .agency-bg-dots {
+  opacity: 0.32;
+  background-image: radial-gradient(rgba(248, 250, 252, 0.035) 1px, transparent 1px);
+}
+
+.agency-bg-noise {
+  opacity: 0.028;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.dark .agency-bg-noise {
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
+}
+
+/* Landing: overlap + section rhythm (premium separation from flat stacks) */
+.landing-pull-up {
+  margin-top: clamp(-3rem, -5vw, -5.5rem);
+}
+
+.landing-curve-top {
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+}
+
+.landing-glass {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 48px -12px rgba(15, 23, 42, 0.12);
+}
+
+.dark .landing-glass {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 32px 64px -16px rgba(0, 0, 0, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .logo-shimmer {
+    animation: none;
+    background-size: 100% auto;
+  }
+}
