@@ -1,12 +1,18 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useId, FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { buttonMotion, ease, ms } from "@/lib/motion/variants";
 
-export function ContactForm() {
+type ContactFormProps = {
+  /** Tighter layout for footer or sidebars */
+  compact?: boolean;
+};
+
+export function ContactForm({ compact = false }: ContactFormProps) {
   const [status, setStatus] = useState<"idle" | "sent">("idle");
   const reduce = useReducedMotion();
+  const fieldId = useId();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -16,9 +22,13 @@ export function ContactForm() {
   const inputClass =
     "mt-2 w-full rounded-xl border border-border bg-surface px-4 py-3 text-foreground shadow-sm outline-none ring-primary/0 transition-[border-color,box-shadow] duration-200 ease-in-out placeholder:text-muted focus:border-primary focus:ring-4 focus:ring-primary/15";
 
+  const nameId = `${fieldId}-name`;
+  const emailId = `${fieldId}-email`;
+  const detailsId = `${fieldId}-details`;
+
   return (
     <motion.form
-      className="mt-8 space-y-6"
+      className={compact ? "mt-4 space-y-4" : "mt-8 space-y-6"}
       onSubmit={handleSubmit}
       noValidate
       initial={reduce ? false : { opacity: 0, y: 20 }}
@@ -26,25 +36,25 @@ export function ContactForm() {
       transition={{ duration: ms.scroll, ease: ease.out }}
     >
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-foreground">
+        <label htmlFor={nameId} className="block text-sm font-medium text-foreground">
           Name
         </label>
-        <input id="name" name="name" type="text" autoComplete="name" required className={inputClass} />
+        <input id={nameId} name="name" type="text" autoComplete="name" required className={inputClass} />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-foreground">
+        <label htmlFor={emailId} className="block text-sm font-medium text-foreground">
           Email
         </label>
-        <input id="email" name="email" type="email" autoComplete="email" required className={inputClass} />
+        <input id={emailId} name="email" type="email" autoComplete="email" required className={inputClass} />
       </div>
       <div>
-        <label htmlFor="details" className="block text-sm font-medium text-foreground">
+        <label htmlFor={detailsId} className="block text-sm font-medium text-foreground">
           Project details
         </label>
         <textarea
-          id="details"
+          id={detailsId}
           name="details"
-          rows={6}
+          rows={compact ? 4 : 6}
           required
           placeholder="What are you building? Who is it for?"
           className={`${inputClass} resize-y`}
@@ -65,7 +75,7 @@ export function ContactForm() {
         {...(reduce ? {} : buttonMotion)}
         className="w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-[box-shadow,filter] duration-200 ease-in-out hover:shadow-xl sm:w-auto"
       >
-        Start Your Project
+        {compact ? "Send message" : "Start Your Project"}
       </motion.button>
     </motion.form>
   );
