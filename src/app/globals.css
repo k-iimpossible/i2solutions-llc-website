@@ -84,6 +84,80 @@
   animation: shimmer 4s ease-in-out infinite;
 }
 
+/* Specular sweep: soft fades, short gap before repeat, theme-tinted band */
+@keyframes logo-shine-sweep {
+  0%,
+  100% {
+    left: -44%;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.45;
+  }
+  14% {
+    opacity: 1;
+    left: -44%;
+  }
+  74% {
+    opacity: 1;
+    left: 102%;
+  }
+  80% {
+    opacity: 0.4;
+    left: 102%;
+  }
+  86% {
+    opacity: 0;
+    left: 102%;
+  }
+}
+
+.logo-shine-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.logo-shine-overlay::before {
+  content: "";
+  position: absolute;
+  top: -38%;
+  bottom: -38%;
+  width: 48%;
+  left: -44%;
+  transform: skewX(-11deg);
+  transform-origin: 50% 50%;
+  /* Uses --primary / --accent from :root or .dark */
+  background: linear-gradient(
+    110deg,
+    color-mix(in srgb, var(--accent) 0%, transparent) 0%,
+    color-mix(in srgb, var(--primary) 14%, transparent) 28%,
+    color-mix(in srgb, var(--accent) 42%, var(--primary) 18%) 50%,
+    color-mix(in srgb, var(--primary) 14%, transparent) 72%,
+    color-mix(in srgb, var(--accent) 0%, transparent) 100%
+  );
+  mix-blend-mode: soft-light;
+  animation: logo-shine-sweep 6.75s cubic-bezier(0.42, 0, 0.2, 1) infinite;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -176,5 +250,11 @@ body {
   .logo-shimmer {
     animation: none;
     background-size: 100% auto;
+  }
+  .logo-shine-overlay::before {
+    animation: none;
+    left: -44%;
+    opacity: 0;
+    transform: skewX(-11deg);
   }
 }

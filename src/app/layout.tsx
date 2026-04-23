@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: [{ url: "/image/i2logo.png", type: "image/png" }],
-    apple: "/image/i2logo.png",
+    icon: [{ url: "/image/tab_logo.png", type: "image/png" }],
+    apple: "/image/tab_logo.png",
   },
 };
 

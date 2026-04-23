@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { SITE_NAME } from "@/lib/site";
 
-/** Intrinsic size of `public/image/i2_logo.png` (platform logo) */
-const PLATFORM_LOGO_WIDTH = 799;
-const PLATFORM_LOGO_HEIGHT = 104;
+/** Intrinsic size of `public/image/logo1.png` / `logo2.png` (same dimensions) */
+const LOGO_WIDTH = 1400;
+const LOGO_HEIGHT = 160;
 
 type LogoProps = {
   className?: string;
@@ -17,8 +17,8 @@ type LogoProps = {
 
 export function Logo({ className = "", matchHeaderHeight = false }: LogoProps) {
   const imageClass = matchHeaderHeight
-    ? "h-8 w-auto max-h-14 object-contain"
-    : "h-8 w-auto sm:h-10 object-contain";
+    ? "h-10 w-auto max-h-14 object-contain"
+    : "h-10 w-auto sm:h-10 object-contain";
 
   return (
     <Link
@@ -28,15 +28,27 @@ export function Logo({ className = "", matchHeaderHeight = false }: LogoProps) {
       } ${className}`}
       aria-label={`${SITE_NAME} home`}
     >
-      <Image
-        src="/image/i2_logo.png"
-        alt=""
-        width={PLATFORM_LOGO_WIDTH}
-        height={PLATFORM_LOGO_HEIGHT}
-        className={imageClass}
-        unoptimized
-        priority
-      />
+      <span className="relative inline-flex shrink-0 overflow-hidden">
+        <Image
+          src="/image/logo2.png"
+          alt=""
+          width={LOGO_WIDTH}
+          height={LOGO_HEIGHT}
+          className={`${imageClass} relative z-0 block dark:hidden`}
+          unoptimized
+          priority
+        />
+        <Image
+          src="/image/logo1.png"
+          alt=""
+          width={LOGO_WIDTH}
+          height={LOGO_HEIGHT}
+          className={`${imageClass} relative z-0 hidden dark:block`}
+          unoptimized
+          priority
+        />
+        <span className="logo-shine-overlay" aria-hidden />
+      </span>
     </Link>
   );
 }
