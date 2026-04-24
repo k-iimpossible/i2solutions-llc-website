@@ -25,7 +25,7 @@ const values = [
     body: "Clean architecture and thoughtful UX are not extras—they are how products stay fast, secure, and maintainable as they grow.",
   },
 ];
-
+//commit
 const howWeWork = [
   {
     title: "Discover & align",
